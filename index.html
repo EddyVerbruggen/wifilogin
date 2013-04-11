@@ -58,21 +58,18 @@
         }
       });
 
-      // Capture loadstop event
+      // Capture loadstop event (note: seems to work only on Android)
       ref.addEventListener('loadstop', function(event) {
-        alert("load stopped");
-//        alert("load stopped");
-//        alert(event.url);
-        // if anything else than '.google.' is loaded..
-//        if (event.url.indexOf('.google.') == -1) {
+//        if anything else than '.google.' is loaded..
+        if (event.url.indexOf('.google.') == -1) {
           // close the browser..
-//          ref.close();
+          ref.close();
           // something went wrong
-//          showAlert("An error occured. Send this to the author please: error @ " + event.url);
-//        } else {
+          showAlert("An error occured. Send this to the author please: error @ " + event.url);
+        } else {
           // google was loaded correctyle, so the user was already authenticated
-//          showAlert("You're already authenticated for the VPN, so you can close this app.");
-//        }
+          showAlert("You're already authenticated for the VPN, so you can close this app.");
+        }
       });
     }
 
@@ -111,6 +108,8 @@
         <br/>
         <br/>
         <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login"/>
+        <br/>
+        Als je google ziet, ben je ingelogd en kun je de app sluiten.
       </form>
     </div>
   </div>
