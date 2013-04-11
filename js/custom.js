@@ -43,5 +43,5 @@ function showAlert(txt) {
 }
 
 function isWiFiConnection() {
-  return Connection.WIFI == navigator.connection.type;
+  return navigator.connection === undefined ? true : Connection.WIFI == navigator.connection.type;
 }

@@ -23,7 +23,7 @@
     function onDeviceReady() {
       initLoginPage();
       if (!isWiFiConnection()) {
-        showAlert("Turn on WiFi first ;)");
+        showAlert("Zet je WiFi even aan ;)");
       }
     }
 
@@ -70,7 +70,7 @@
 <body>
 
   <h1>VPN Login</h1>
-
+  <div id="header">Je username en password worden onthouden in de app en verzonden naar de VPN server over een beveiligde verbinding.</div>
   <form id="loginForm">
     <input type="text" name="username" id="username" placeholder="username" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
     <br/><br/>
