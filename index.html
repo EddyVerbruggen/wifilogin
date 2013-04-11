@@ -28,8 +28,8 @@
 
     function showLoginPage() {
       showAlert("showin login page");
-      $('#loginPage').show();
       initLoginPage();
+      $('#loginPage').show();
     }
   </script>
 </head>
@@ -37,16 +37,32 @@
 
   <div id="loginPage" data-role="page" data-theme="a" style="display: none">
     <script type="text/javascript">
+      function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
+        var ref = window.open(pleaseTakeMeHere, '_blank', 'location=no');
+
+        // Capture loadstart event
+        ref.addEventListener('loadstart', function(event) {
+          showAlert('start: ' + event.url);
+        });
+
+        // Programmatically closing the InAppBrowser clears its history.
+        ref.addEventListener('exit', function(event) {
+          ref.close();
+        });
+      }
+
       function initLoginPage() {
         var storedLoginName = getLoginName();
         if (storedLoginName != null && storedLoginName != "undefined") {
-          $("#loginName").val(storedLoginName.toLowerCase());
+          $("#username").val(storedLoginName.toLowerCase());
         }
         $('#loginButton').bind('click', function() {
-          setLoginName($('#loginName').val());
+          setLoginName($('#username').val());
           setPassword($('#password').val());
 
           showAlert("hand over to inappbrowser");
+
+          redirectAndAuthenticate("http://www.nu.nl", $('#username').val(), $('#password').val());
         })
       }
     </script>
@@ -54,9 +70,10 @@
     <div id="errors"></div>
     <div data-role="content">
       <form id="loginForm">
-        <input type="text" name="loginName" id="loginName" placeholder="E-mailadres" value="test20@mydailylifestyle.com" autocapitalize="off" autocomplete="off" autocorrect="off"/>
-        <input type="password" name="password" id="password" placeholder="Wachtwoord" value="test123" autocapitalize="off" autocomplete="off" autocorrect="off"/>
-        <a href="" id="forgotPassword">ik ben mijn wachtwoord vergeten</a>
+        <input type="text" name="username" id="username" placeholder="username" value="everbruggen" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+        <br/><br/>
+        <input type="password" name="password" id="password" placeholder="password" value="vygq5440" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+        <br/>
         <br/>
         <br/>
         <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login"/>

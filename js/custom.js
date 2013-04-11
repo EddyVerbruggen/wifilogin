@@ -56,15 +56,6 @@ function getUser() {
   }
 }
 
-function openWindow(pleaseTakeMeHere) {
-  // window.open uses the PG InAppBrowser API (http://docs.phonegap.com/en/2.5.0/cordova_inappbrowser_inappbrowser.md.html)
-  var ref = window.open(pleaseTakeMeHere, '_blank', 'location=no');
-  // Programmatically closing the InAppBrowser clears its history.
-  ref.addEventListener('exit', function() {
-    ref.close();
-  });
-}
-
 function showAlert(txt) {
   if (isMobile()) {
     navigator.notification.alert(txt, function(){}, "Melding");
