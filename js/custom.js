@@ -63,3 +63,7 @@ function showAlert(txt) {
     alert(txt);
   }
 }
+
+function isWiFiConnection() {
+  return Connection.WIFI == navigator.connection.type;
+}

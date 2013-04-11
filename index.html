@@ -19,6 +19,9 @@
         doVPNRedirect()
       } else {
         showLoginPage();
+        if (!isWiFiConnection()) {
+          showAlert("Turn on WiFi first ;)");
+        }
       }
     }
 
