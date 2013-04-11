@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"/>
+  <title>VPN Login</title>
+  <link rel="stylesheet" href="css/custom.css" type="text/css"/>
+  <script src="js/lib/jquery-1.9.1.min.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="cordova.js"></script>
+  <script type="text/javascript">
+    // init phonegap when the DOM has been fully loaded
+    $(document).ready(function() {
+      document.addEventListener('deviceready', onDeviceReady, false);
+    });
+
+    function onDeviceReady() {
+      if (isLoggedIn()) {
+        doVPNRedirect()
+      } else {
+        showLoginPage();
+      }
+    }
+
+    function doVPNRedirect() {
+      showAlert("redirecting to VPN");
+    }
+
+    function showLoginPage() {
+      showAlert("showin login page");
+      initLoginPage();
+      $('loginPage').show();
+    }
+  </script>
+</head>
+<body>
+
+  <div id="loginPage" data-role="page" data-theme="a" style="display: none">
+    <script type="text/javascript">
+      function initLoginPage() {
+        var storedLoginName = getLoginName();
+        if (storedLoginName != null && storedLoginName != "undefined") {
+          $("#loginName").val(storedLoginName.toLowerCase());
+        }
+        $('#loginButton').bind('click', function() {
+          setLoginName($('#loginName').val());
+          setPassword($('#password').val());
+
+          showAlert("hand over to inappbrowser");
+        })
+      }
+    </script>
+    <h1>inloggen</h1>
+    <div id="errors"></div>
+    <div data-role="content">
+      <form id="loginForm">
+        <input type="text" name="loginName" id="loginName" placeholder="E-mailadres" value="test20@mydailylifestyle.com" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+        <input type="password" name="password" id="password" placeholder="Wachtwoord" value="test123" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+        <a href="" id="forgotPassword">ik ben mijn wachtwoord vergeten</a>
+        <br/>
+        <br/>
+        <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login"/>
+      </form>
+    </div>
+  </div>
+
+</body>
