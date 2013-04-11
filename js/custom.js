@@ -18,15 +18,6 @@ function isMobile() {
   return isIOS() || isAndroid();
 }
 
-function logout() {
-  storeUser(null);
-  setPassword(null);
-}
-
-function isLoggedIn() {
-  return getUser() != null;
-}
-
 function setLoginName(loginName) {
   localStorage.setItem("loginName", loginName);
 }
@@ -41,19 +32,6 @@ function setPassword(password) {
 
 function getPassword() {
   return localStorage.getItem("password");
-}
-
-function storeUser(obj) {
-  return localStorage.setItem("user", JSON.stringify(obj));
-}
-
-function getUser() {
-  var usr = localStorage.getItem("user");
-  if (usr == null || usr == 'undefined') {
-    return null;
-  } else {
-    return JSON.parse(usr);
-  }
 }
 
 function showAlert(txt) {
