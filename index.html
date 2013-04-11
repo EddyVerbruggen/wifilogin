@@ -32,7 +32,7 @@
     }
 
     function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
-      var ref = window.open(pleaseTakeMeHere, '_blank', 'location=no');
+      var ref = window.open(pleaseTakeMeHere, '_blank', 'location=yes');
 
       // Capture loadstart event
       ref.addEventListener('loadstart', function(event) {
