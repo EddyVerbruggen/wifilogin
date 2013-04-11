@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
-        id="nl.x-services.vpnlogin"
-        version="0.1">
+        id="nl.x-services.wifilogin"
+        version="0.2">
 
-  <name>VPN Login</name><!-- is also the name of the icon on the device -->
+  <name>WiFi login</name><!-- is also the name of the icon on the device -->
 
   <description>
-    Quick login app for WiFi over VPN
+    Quick login app for username/password secured WiFi
   </description>
 
   <author href="http://www.x-services.nl"
