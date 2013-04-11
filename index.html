@@ -11,7 +11,11 @@
   <script type="text/javascript">
     // init phonegap when the DOM has been fully loaded
     $(document).ready(function() {
-      document.addEventListener('deviceready', onDeviceReady, false);
+      if (isMobile()) {
+        document.addEventListener('deviceready', onDeviceReady, false);
+      } else {
+        onDeviceReady();
+      }
     });
 
     function onDeviceReady() {
@@ -54,6 +58,8 @@
 
       // Capture loadstop event
       ref.addEventListener('loadstop', function(event) {
+        alert("load stopped");
+        alert(event.url);
         // if anything else than '.google.' is loaded..
         if (event.url.indexOf('.google.') == -1) {
           // close the browser..
@@ -72,12 +78,19 @@
       if (storedLoginName != null && storedLoginName != "undefined") {
         $("#username").val(storedLoginName);
       }
-      $('#loginButton').bind('click', function() {
-        setLoginName($('#username').val());
-        setPassword($('#password').val());
 
-        redirectAndAuthenticate("http://www.google.com", $('#username').val(), $('#password').val());
-      })
+      var storedPassword = getPassword();
+      if (storedPassword != null && storedPassword != "undefined") {
+        $("#password").val(storedPassword);
+      }
+
+      $('#loginButton')
+          .unbind('click')
+          .bind('click', function() {
+            setLoginName($('#username').val());
+            setPassword($('#password').val());
+            redirectAndAuthenticate("http://www.google.com", $('#username').val(), $('#password').val());
+          });
     }
   </script>
 </head>
