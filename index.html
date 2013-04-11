@@ -15,73 +15,82 @@
     });
 
     function onDeviceReady() {
-      if (isLoggedIn()) {
-        doVPNRedirect()
-      } else {
+//      if (isLoggedIn()) {
+//        redirectAndAuthenticate("http://www.google.com", getLoginName(), getPassword());
+//      } else {
         showLoginPage();
         if (!isWiFiConnection()) {
           showAlert("Turn on WiFi first ;)");
         }
-      }
+//      }
     }
 
     function doVPNRedirect() {
-      showAlert("redirecting to VPN");
+      showAlert("TODO: redirect to VPN");
     }
 
     function showLoginPage() {
-      showAlert("showin login page");
       initLoginPage();
       $('#loginPage').show();
+    }
+
+    function redirect(pleaseTakeMeHere) {
+      window.open(pleaseTakeMeHere, '_blank', 'location=yes');
+    }
+
+    function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
+      var ref = window.open(pleaseTakeMeHere, '_blank', 'location=no');
+
+      // Capture loadstart event
+      ref.addEventListener('loadstart', function(event) {
+        // if anything else than '.google.' is loaded..
+        if (event.url.indexOf('.google.') == -1) {
+          // close the browser..
+          ref.close();
+          // .. and open a new (augmented) one
+          redirect(event.url + "&user=" + username + "&password=" + password);
+        }
+      });
+
+      // Capture loadstop event
+      ref.addEventListener('loadstop', function(event) {
+        // if anything else than '.google.' is loaded..
+        if (event.url.indexOf('.google.') == -1) {
+          // close the browser..
+          ref.close();
+          // something went wrong
+          showAlert("An error occured. Send this to the author please: error @ " + event.url);
+        } else {
+          // google was loaded correctyle, so the user was already authenticated
+          showAlert("You're already authenticated for the VPN, so you can close this app.");
+        }
+      });
+    }
+
+    function initLoginPage() {
+      var storedLoginName = getLoginName();
+      if (storedLoginName != null && storedLoginName != "undefined") {
+        $("#username").val(storedLoginName);
+      }
+      $('#loginButton').bind('click', function() {
+        setLoginName($('#username').val());
+        setPassword($('#password').val());
+
+        redirectAndAuthenticate("http://www.google.com", $('#username').val(), $('#password').val());
+      })
     }
   </script>
 </head>
 <body>
 
   <div id="loginPage" data-role="page" data-theme="a" style="display: none">
-    <script type="text/javascript">
-      function redirect(pleaseTakeMeHere) {
-        window.open(pleaseTakeMeHere, '_blank', 'location=yes');
-      }
-
-      function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
-        var ref = window.open(pleaseTakeMeHere, '_blank', 'location=no');
-
-        // Capture loadstart event
-        ref.addEventListener('loadstart', function(event) {
-          if (event.url.indexOf('wlan') > -1) {
-            showAlert('wlan redirect');
-            ref.close();
-
-            var newUrl = event.url + "&user=" + username + "&password=" + password;
-            showAlert('opening a new browser so we can adjust the event.url to: ' + newUrl);
-            redirect(newUrl);
-          }
-        });
-      }
-
-      function initLoginPage() {
-        var storedLoginName = getLoginName();
-        if (storedLoginName != null && storedLoginName != "undefined") {
-          $("#username").val(storedLoginName.toLowerCase());
-        }
-        $('#loginButton').bind('click', function() {
-          setLoginName($('#username').val());
-          setPassword($('#password').val());
-
-          showAlert("hand over to inappbrowser");
-
-          redirectAndAuthenticate("http://www.nu.nl", $('#username').val(), $('#password').val());
-        })
-      }
-    </script>
     <h1>inloggen</h1>
     <div id="errors"></div>
     <div data-role="content">
       <form id="loginForm">
-        <input type="text" name="username" id="username" placeholder="username" value="everbruggen" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+        <input type="text" name="username" id="username" placeholder="username" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
         <br/><br/>
-        <input type="password" name="password" id="password" placeholder="password" value="vygq5440" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+        <input type="password" name="password" id="password" placeholder="password" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
         <br/>
         <br/>
         <br/>
