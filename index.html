@@ -21,23 +21,10 @@
     });
 
     function onDeviceReady() {
-//      if (isLoggedIn()) {
-//        redirectAndAuthenticate("http://www.google.com", getLoginName(), getPassword());
-//      } else {
-        showLoginPage();
-        if (!isWiFiConnection()) {
-          showAlert("Turn on WiFi first ;)");
-        }
-//      }
-    }
-
-    function doVPNRedirect() {
-      showAlert("TODO: redirect to VPN");
-    }
-
-    function showLoginPage() {
       initLoginPage();
-      $('#loginPage').show();
+      if (!isWiFiConnection()) {
+        showAlert("Turn on WiFi first ;)");
+      }
     }
 
     function redirect(pleaseTakeMeHere) {
@@ -55,20 +42,6 @@
           ref.close();
           // .. and open a new (augmented) one
           redirect(event.url + "&user=" + username + "&password=" + password);
-        }
-      });
-
-      // Capture loadstop event (note: seems to work only on Android)
-      ref.addEventListener('loadstop', function(event) {
-//        if anything else than '.google.' is loaded..
-        if (event.url.indexOf('.google.') == -1) {
-          // close the browser..
-          ref.close();
-          // something went wrong
-          showAlert("An error occured. Send this to the author please: error @ " + event.url);
-        } else {
-          // google was loaded correctyle, so the user was already authenticated
-          showAlert("You're already authenticated for the VPN, so you can close this app.");
         }
       });
     }
@@ -96,22 +69,18 @@
 </head>
 <body>
 
-  <div id="loginPage" data-role="page" data-theme="a" style="display: none">
-    <h1>inloggen</h1>
-    <div id="errors"></div>
-    <div data-role="content">
-      <form id="loginForm">
-        <input type="text" name="username" id="username" placeholder="username" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
-        <br/><br/>
-        <input type="password" name="password" id="password" placeholder="password" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
-        <br/>
-        <br/>
-        <br/>
-        <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login"/>
-        <br/>
-        Als je google ziet, ben je ingelogd en kun je de app sluiten.
-      </form>
-    </div>
-  </div>
+  <h1>VPN Login</h1>
+
+  <form id="loginForm">
+    <input type="text" name="username" id="username" placeholder="username" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+    <br/><br/>
+    <input type="password" name="password" id="password" placeholder="password" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
+    <br/>
+    <br/>
+    <br/>
+    <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login"/>
+  </form>
+
+  <div id="footer">Zie je Google na klikken op Login?<br/>Dan ben je ingelogd en kun je de app sluiten.</div>
 
 </body>
