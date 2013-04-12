@@ -12,6 +12,8 @@
   <script type="text/javascript">
     "use strict";
 
+    var childBrowserTimeout = 1500;
+
     // init phonegap when the DOM has been fully loaded
     $(document).ready(function() {
       if (isMobile()) {
@@ -51,14 +53,14 @@
                   // ..a and close the browser
                   feedback("&check; Je bent nu ingelogd.");
                   window.plugins.childBrowser.close();
-                }, 1000);
+                }, childBrowserTimeout);
               };
 
-            }, 1000);
+            }, childBrowserTimeout);
           } else {
             feedback("&check; Je was nog ingelogd.");
           }
-        }, 1000);
+        }, childBrowserTimeout);
       };
     }
 
