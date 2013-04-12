@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <!--<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"/>-->
-  <title>VPN Login</title>
+  <title>WiFi login</title>
   <link rel="stylesheet" href="css/custom.css" type="text/css"/>
   <script src="js/lib/jquery-1.9.1.min.js"></script>
   <script src="js/custom.js"></script>
@@ -23,16 +23,16 @@
     function onDeviceReady() {
       initLoginPage();
       if (!isWiFiConnection()) {
-        showAlert("Turn on WiFi first ;)");
+        showAlert("Zet je WiFi even aan ;)");
       }
-    }
-
-    function redirect(pleaseTakeMeHere) {
-      window.open(pleaseTakeMeHere, '_blank', 'location=yes');
     }
 
     function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
       var ref = window.open(pleaseTakeMeHere, '_blank', 'location=yes');
+
+      ref.addEventListener('loaderror', function(event) {
+        alert("error: " + event.message);
+      });
 
       // Capture loadstart event
       ref.addEventListener('loadstart', function(event) {
@@ -41,7 +41,17 @@
           // close the browser..
           ref.close();
           // .. and open a new (augmented) one
-          redirect(event.url + "&user=" + username + "&password=" + password);
+          var authRef = window.open(event.url + "&user=" + username + "&password=" + password, '_blank', 'location=yes');
+
+          authRef.addEventListener('loaderror', function(event) {
+            alert("error: " + event.message);
+          });
+
+          // Capture loadstop event
+          authRef.addEventListener('loadstop', function(event) {
+            authRef.close();
+            alert("Debugging: loading stopped: " + event.url);
+          });
         }
       });
     }
@@ -69,8 +79,8 @@
 </head>
 <body>
 
-  <h1>VPN Login</h1>
-
+  <h1>WiFi login</h1>
+  <div id="header">Je username en password worden onthouden in de app en verzonden naar de authenticatie server over een beveiligde verbinding.</div>
   <form id="loginForm">
     <input type="text" name="username" id="username" placeholder="username" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
     <br/><br/>
