@@ -11,10 +11,6 @@
   <script src="childbrowser.js"></script>
   <script type="text/javascript">
     "use strict";
-
-    var childBrowserTimeout = 1500;
-
-    // init phonegap when the DOM has been fully loaded
     $(document).ready(function() {
       if (isMobile()) {
         document.addEventListener('deviceready', onDeviceReady, false);
@@ -25,13 +21,17 @@
 
     function onDeviceReady() {
       initLoginPage();
-      if (!isWiFiConnection()) {
-        showAlert("Zet je WiFi even aan ;)");
-      }
+      checkWiFi();
     }
 
-    function openChildBrowser(pleaseTakeMeHere) {
-      window.plugins.childBrowser.showWebPage(pleaseTakeMeHere, {showAddressBar: false, showLocationBar: false, showNavigationBar: false});
+    function checkWiFi() {
+      if (isWiFiConnection()) {
+        $("#noWiFiContainer").hide();
+        $("#loginButton").show();
+      } else {
+        $("#noWiFiContainer").append(".");
+        setTimeout(function(){checkWiFi()}, 1000)
+      }
     }
 
     function redirectAndAuthenticate(pleaseTakeMeHere) {
@@ -58,7 +58,7 @@
 
             }, childBrowserTimeout);
           } else {
-            feedback("&check; Je was nog ingelogd.");
+            feedback("&check; Je was reeds ingelogd.");
           }
         }, childBrowserTimeout);
       };
@@ -80,7 +80,7 @@
           .bind('click', function() {
             setLoginName($('#username').val());
             setPassword($('#password').val());
-            redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html");
+            redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html?ts=" + new Date().getTime());
           });
     }
 
@@ -104,7 +104,8 @@
     <br/>
     <br/>
     <br/>
-    <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login"/>
+    <div id="noWiFiContainer">Wachtend op een WiFi signaal..</div>
+    <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login" style="display: none"/>
   </form>
 
   <div id="feedback"></div>

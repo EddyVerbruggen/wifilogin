@@ -1,5 +1,11 @@
 "use strict";
 
+var childBrowserTimeout = 1500;
+
+function openChildBrowser(pleaseTakeMeHere) {
+  window.plugins.childBrowser.showWebPage(pleaseTakeMeHere, {showAddressBar: false, showLocationBar: false, showNavigationBar: false});
+}
+
 // generic catch for errors
 window.onerror = function(message, file, line) {
   alert('Error gevangen: ' + file + ':' + line + '\n' + message);
