@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <!--<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"/>-->
-  <title>WiFi login</title>
+  <title>VPN Login</title>
   <link rel="stylesheet" href="css/custom.css" type="text/css"/>
   <script src="js/lib/jquery-1.9.1.min.js"></script>
   <script src="js/custom.js"></script>
@@ -23,20 +23,16 @@
     function onDeviceReady() {
       initLoginPage();
       if (!isWiFiConnection()) {
-        showAlert("Zet je WiFi even aan ;)");
+        showAlert("Turn on WiFi first ;)");
       }
     }
 
     function redirect(pleaseTakeMeHere) {
-      return window.open(pleaseTakeMeHere, '_blank', 'location=yes');
+      window.open(pleaseTakeMeHere, '_blank', 'location=yes');
     }
 
     function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
-      var ref = redirect(pleaseTakeMeHere);
-
-      ref.addEventListener('loaderror', function(event) {
-        alert("error: " + event.message);
-      });
+      var ref = window.open(pleaseTakeMeHere, '_blank', 'location=yes');
 
       // Capture loadstart event
       ref.addEventListener('loadstart', function(event) {
@@ -45,17 +41,7 @@
           // close the browser..
           ref.close();
           // .. and open a new (augmented) one
-          var authRef = redirect(event.url + "&user=" + username + "&password=" + password);
-
-          authRef.addEventListener('loaderror', function(event) {
-            alert("error: " + event.message);
-          });
-
-          // Capture loadstop event
-          authRef.addEventListener('loadstop', function(event) {
-            authRef.close();
-            alert("Debugging: loading stopped: " + event.url);
-          });
+          redirect(event.url + "&user=" + username + "&password=" + password);
         }
       });
     }
@@ -83,8 +69,8 @@
 </head>
 <body>
 
-  <h1>WiFi login</h1>
-  <div id="header">Je username en password worden onthouden in de app en verzonden naar de authenticatie server over een beveiligde verbinding.</div>
+  <h1>VPN Login</h1>
+
   <form id="loginForm">
     <input type="text" name="username" id="username" placeholder="username" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
     <br/><br/>
