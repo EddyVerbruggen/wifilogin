@@ -37,27 +37,21 @@
 
       // Capture loadstart event
       window.plugins.childBrowser.onLocationChange = function (url) {
-        debuglog("<br/>url: " + url);
-        debuglog("<br/>closing browser in 3 sec");
-
         setTimeout(function() {
           // close the browser..
           window.plugins.childBrowser.close();
 
-        // if anything else than 'x-services.nl' is loaded..
+          // if anything else than 'x-services.nl' was loaded..
           if (url.indexOf('x-services.nl') == -1) {
-            debuglog("closed by code, opening new one in 3 secs to " + url);
-
             setTimeout(function() {
-
-              // .. and open a new (augmented) one
+              // .. open a new one with added credentials
               openChildBrowser(url + "&user=" + $('#username').val() + "&password=" + $('#password').val());
-
               window.plugins.childBrowser.onLocationChange = function (url) {
-                debuglog("<br/>url 2: " + url);
-                // close the browser..
-                window.plugins.childBrowser.close();
-                feedback("&check; Je bent nu ingelogd.");
+                setTimeout(function() {
+                  // ..a and close the browser
+                  feedback("&check; Je bent nu ingelogd.");
+                  window.plugins.childBrowser.close();
+                }, 1000);
               };
 
             }, 1000);
@@ -93,16 +87,14 @@
           .html(what)
           .show();
     }
-
-    function debuglog(what) {
-      $("#debuglog").append("<br/>"+new Date()+": "+what);
-    }
   </script>
 </head>
 <body>
 
   <h1>WiFi login</h1>
+
   <div id="header">Je username en password worden onthouden in de app en verzonden naar de authenticatie server over een beveiligde verbinding.</div>
+
   <form id="loginForm">
     <input type="text" name="username" id="username" placeholder="username" value="" autocapitalize="off" autocomplete="off" autocorrect="off"/>
     <br/><br/>
@@ -114,7 +106,5 @@
   </form>
 
   <div id="feedback"></div>
-
-  <div id="debuglog" style="display: none"></div>
 
 </body>
