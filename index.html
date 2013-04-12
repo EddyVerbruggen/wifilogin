@@ -36,9 +36,9 @@
 
       // Capture loadstart event
       ref.addEventListener('loadstart', function(event) {
-        // if anything else than '.google.' is loaded..
+        // if anything else than 'x-services.nl' is loaded..
         debuglog("<br/>loadstart: " + event.url);
-        if (event.url.indexOf('.google.') == -1) {
+        if (event.url.indexOf('x-services.nl') == -1) {
           // close the browser..
 
           debuglog("<br/>closing browser in 5 sec");
@@ -83,7 +83,7 @@
           .bind('click', function() {
             setLoginName($('#username').val());
             setPassword($('#password').val());
-            redirectAndAuthenticate("http://www.google.nl", $('#username').val(), $('#password').val());
+            redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html", $('#username').val(), $('#password').val());
           });
     }
 
