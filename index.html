@@ -45,21 +45,26 @@
           setTimeout(function() {
            ref.close();
 
+            debuglog("closed by code, opening new one in 5 secs to " + event.url);
 
-          // .. and open a new (augmented) one
-          var authRef = window.open(event.url + "&user=" + username + "&password=" + password, '_blank', 'location=yes');
-
-          authRef.addEventListener('loaderror', function(event) {
-            debuglog("<br/>error: " + event.message);
-          });
-
-          // Capture loadstop event
-          authRef.addEventListener('loadstop', function(event) {
-            debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
             setTimeout(function() {
-              authRef.close();
+
+              // .. and open a new (augmented) one
+              var authRef = window.open(event.url + "&user=" + username + "&password=" + password, '_blank', 'location=yes');
+
+              authRef.addEventListener('loaderror', function(event) {
+                debuglog("<br/>error: " + event.message);
+              });
+
+              // Capture loadstop event
+              authRef.addEventListener('loadstop', function(event) {
+                debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
+                setTimeout(function() {
+                  authRef.close();
+                }, 5000);
+              });
+
             }, 5000);
-          });
 
           }, 5000);
 
