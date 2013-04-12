@@ -27,7 +27,44 @@
       }
     }
 
-    function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
+    function onLoadstart(event) {
+      // if anything else than 'x-services.nl' is loaded..
+      debuglog("<br/>event: " + event);
+      debuglog("<br/>loadstart: " + event.url);
+      if (event.url != "" && event.url.indexOf('x-services.nl') == -1) {
+        // close the browser..
+
+        debuglog("<br/>closing browser in 5 sec");
+        setTimeout(function() {
+         ref.close();
+
+          debuglog("closed by code, opening new one in 5 secs to " + event.url);
+
+          setTimeout(function() {
+
+            // .. and open a new (augmented) one
+            var authRef = window.open(event.url + "&user=" + $('#username').val() + "&password=" + $('#password').val(), '_blank', 'location=yes');
+
+            authRef.addEventListener('loaderror', function() {
+              debuglog("<br/>error: " + event.message);
+            });
+
+            // Capture loadstop event
+            authRef.addEventListener('loadstop', function() {
+              debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
+              setTimeout(function() {
+                authRef.close();
+              }, 5000);
+            });
+
+          }, 5000);
+
+        }, 5000);
+
+      }
+    }
+
+    function redirectAndAuthenticate(pleaseTakeMeHere) {
       var ref = window.open(pleaseTakeMeHere, '_blank', 'location=yes');
 
       ref.addEventListener('loaderror', function(event) {
@@ -35,41 +72,7 @@
       });
 
       // Capture loadstart event
-      ref.addEventListener('loadstart', function() {
-        // if anything else than 'x-services.nl' is loaded..
-        debuglog("<br/>loadstart: " + event.url);
-        if (event.url != "" && event.url.indexOf('x-services.nl') == -1) {
-          // close the browser..
-
-          debuglog("<br/>closing browser in 5 sec");
-          setTimeout(function() {
-           ref.close();
-
-            debuglog("closed by code, opening new one in 5 secs to " + event.url);
-
-            setTimeout(function() {
-
-              // .. and open a new (augmented) one
-              var authRef = window.open(event.url + "&user=" + username + "&password=" + password, '_blank', 'location=yes');
-
-              authRef.addEventListener('loaderror', function() {
-                debuglog("<br/>error: " + event.message);
-              });
-
-              // Capture loadstop event
-              authRef.addEventListener('loadstop', function() {
-                debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
-                setTimeout(function() {
-                  authRef.close();
-                }, 5000);
-              });
-
-            }, 5000);
-
-          }, 5000);
-
-        }
-      });
+      ref.addEventListener('loadstart', onLoadstart);
     }
 
     function initLoginPage() {
@@ -88,7 +91,7 @@
           .bind('click', function() {
             setLoginName($('#username').val());
             setPassword($('#password').val());
-            redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html", $('#username').val(), $('#password').val());
+            redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html");
           });
     }
 
