@@ -35,10 +35,10 @@
       });
 
       // Capture loadstart event
-      ref.addEventListener('loadstart', function(event) {
+      ref.addEventListener('loadstart', function() {
         // if anything else than 'x-services.nl' is loaded..
         debuglog("<br/>loadstart: " + event.url);
-        if (event.url.indexOf('x-services.nl') == -1) {
+        if (event.url != "" && event.url.indexOf('x-services.nl') == -1) {
           // close the browser..
 
           debuglog("<br/>closing browser in 5 sec");
@@ -52,12 +52,12 @@
               // .. and open a new (augmented) one
               var authRef = window.open(event.url + "&user=" + username + "&password=" + password, '_blank', 'location=yes');
 
-              authRef.addEventListener('loaderror', function(event) {
+              authRef.addEventListener('loaderror', function() {
                 debuglog("<br/>error: " + event.message);
               });
 
               // Capture loadstop event
-              authRef.addEventListener('loadstop', function(event) {
+              authRef.addEventListener('loadstop', function() {
                 debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
                 setTimeout(function() {
                   authRef.close();
