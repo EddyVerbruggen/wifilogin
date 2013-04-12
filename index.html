@@ -28,11 +28,11 @@
     }
 
     function redirect(pleaseTakeMeHere) {
-      window.open(pleaseTakeMeHere, '_blank', 'location=yes');
+      return window.open(pleaseTakeMeHere, '_blank', 'location=no');
     }
 
     function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
-      var ref = window.open(pleaseTakeMeHere, '_blank', 'location=yes');
+      var ref = redirect(pleaseTakeMeHere);
 
       // Capture loadstart event
       ref.addEventListener('loadstart', function(event) {
@@ -41,7 +41,12 @@
           // close the browser..
           ref.close();
           // .. and open a new (augmented) one
-          redirect(event.url + "&user=" + username + "&password=" + password);
+          var authRef = redirect(event.url + "&user=" + username + "&password=" + password);
+          // Capture loadstop event
+          authRef.addEventListener('loadstop', function(event) {
+            authRef.close();
+            alert("Debugging: loading stopped");
+          });
         }
       });
     }

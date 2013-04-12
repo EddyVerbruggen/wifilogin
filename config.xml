@@ -50,15 +50,15 @@
   <gap:plugin name="ChildBrowser"/><!-- latest release -->
 
   <feature name="http://api.phonegap.com/1.0/network"/>
-  <!--<feature name="http://api.phonegap.com/1.0/camera"/>-->
+  <feature name="http://api.phonegap.com/1.0/file"/>
 
-  <preference name="phonegap-version" value="2.3.0"/>
+  <preference name="phonegap-version" value="2.5.0"/>
   <preference name="orientation" value="portrait"/><!-- both landscape and portrait-->
   <preference name="target-device" value="universal"/>
   <preference name="webviewbounce" value="false"/><!-- iOS rubber banding -->
   <preference name="ios-statusbarstyle" value="black-opaque"/>
   <preference name="android-minSdkVersion" value="8" />
-  <preference name="android-installLocation" value="auto" /><!-- preferExternal; preferably install on SD-card -->
+  <preference name="android-installLocation" value="preferExternal" /><!-- preferExternal; preferably install on SD-card -->
   <preference name="stay-in-webview" value="false" /><!-- external sites -->
   <preference name="auto-hide-splash-screen" value="true" /><!-- we're not hiding it with js -->
   <preference name="splash-screen-duration" value="2000" /> <!-- default 5000 -->
