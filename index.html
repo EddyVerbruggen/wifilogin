@@ -57,19 +57,12 @@
                 debuglog("<br/>url 2: " + url);
                 // close the browser..
                 window.plugins.childBrowser.close();
-                feedback("Je bent nu ingelogd.");
+                feedback("&check; Je bent nu ingelogd.");
               };
 
-              // Capture loadstop event
-//              ref.addEventListener('loadstop', function() {
-//                debuglog("<br/>loading stopped, closing in 3 sec: " + event.url);
-//                setTimeout(function() {
-//                  ref.close();
-//                }, 5000);
-//              });
             }, 1000);
           } else {
-            feedback("Je was nog ingelogd.");
+            feedback("&check; Je was nog ingelogd.");
           }
         }, 1000);
       };
@@ -96,7 +89,9 @@
     }
 
     function feedback(what) {
-      $("#feedback").html(what);
+      $("#feedback")
+          .html(what)
+          .show();
     }
 
     function debuglog(what) {
@@ -118,10 +113,8 @@
     <input type="button" data-role="button" id="loginButton" data-icon="arrow-r" data-iconpos="right" data-theme="a" value="Login"/>
   </form>
 
-  <div id="footer">Zie je Google na klikken op Login?<br/>Dan ben je ingelogd en kun je de app sluiten.</div>
-
   <div id="feedback"></div>
 
-  <div id="debuglog"></div>
+  <div id="debuglog" style="display: none"></div>
 
 </body>
