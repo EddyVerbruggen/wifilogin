@@ -95,6 +95,10 @@
           });
     }
 
+    function feedback(what) {
+      $("#feedback").html(what);
+    }
+
     function debuglog(what) {
       $("#debuglog").append("<br/>"+new Date()+": "+what);
     }
