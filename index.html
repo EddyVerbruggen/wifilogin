@@ -8,6 +8,7 @@
   <script src="js/lib/jquery-1.9.1.min.js"></script>
   <script src="js/custom.js"></script>
   <script src="cordova.js"></script>
+  <script src="childbrowser.js"></script>
   <script type="text/javascript">
     "use strict";
 
@@ -28,49 +29,40 @@
     }
 
     function onLoadstart(event) {
-      // if anything else than 'x-services.nl' is loaded..
-      debuglog("<br/>event: " + event);
-      debuglog("<br/>loadstart: " + event.url);
+    }
+
+    function redirectAndAuthenticate(pleaseTakeMeHere) {
+      window.plugins.childBrowser.showWebPage(pleaseTakeMeHere, {showLocationBar: true});
+
+      // Capture loadstart event
+      window.plugins.childBrowser.onLocationChange = function (url) {
+        // if anything else than 'x-services.nl' is loaded..
+        debuglog("<br/>url: " + url);
         // close the browser..
 
         debuglog("<br/>closing browser in 5 sec");
         setTimeout(function() {
-          ref.close();
+          window.plugins.childBrowser.close();
 
-          if (event.url != "" && event.url.indexOf('x-services.nl') == -1) {
-            debuglog("closed by code, opening new one in 5 secs to " + event.url);
+          if (url.indexOf('x-services.nl') == -1) {
+            debuglog("closed by code, opening new one in 5 secs to " + url);
 
             setTimeout(function() {
 
               // .. and open a new (augmented) one
-              ref = window.open(event.url + "&user=" + $('#username').val() + "&password=" + $('#password').val(), '_blank', 'location=yes');
-
-              ref.addEventListener('loaderror', function() {
-                debuglog("<br/>error: " + event.message);
-              });
+              window.plugins.childBrowser.showWebPage(url + "&user=" + $('#username').val() + "&password=" + $('#password').val(), {showLocationBar: true});
 
               // Capture loadstop event
-              ref.addEventListener('loadstop', function() {
-                debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
-                setTimeout(function() {
-                  ref.close();
-                }, 5000);
-              });
+//              ref.addEventListener('loadstop', function() {
+//                debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
+//                setTimeout(function() {
+//                  ref.close();
+//                }, 5000);
+//              });
             }, 5000);
           }
         }, 5000);
-    }
-
-    var ref;
-    function redirectAndAuthenticate(pleaseTakeMeHere) {
-      ref = window.open(pleaseTakeMeHere, '_blank', 'location=yes');
-
-      ref.addEventListener('loaderror', function(event) {
-        debuglog("<br/>error: " + event.message);
-      });
-
-      // Capture loadstart event
-      ref.addEventListener('loadstart', onLoadstart);
+      };
     }
 
     function initLoginPage() {
