@@ -28,11 +28,15 @@
     }
 
     function redirect(pleaseTakeMeHere) {
-      return window.open(pleaseTakeMeHere, '_blank', 'location=no');
+      return window.open(pleaseTakeMeHere, '_blank', 'location=yes');
     }
 
     function redirectAndAuthenticate(pleaseTakeMeHere, username, password) {
       var ref = redirect(pleaseTakeMeHere);
+
+      ref.addEventListener('loaderror', function(event) {
+        alert("error: " + event.message);
+      });
 
       // Capture loadstart event
       ref.addEventListener('loadstart', function(event) {
@@ -42,10 +46,15 @@
           ref.close();
           // .. and open a new (augmented) one
           var authRef = redirect(event.url + "&user=" + username + "&password=" + password);
+
+          authRef.addEventListener('loaderror', function(event) {
+            alert("error: " + event.message);
+          });
+
           // Capture loadstop event
           authRef.addEventListener('loadstop', function(event) {
             authRef.close();
-            alert("Debugging: loading stopped");
+            alert("Debugging: loading stopped: " + event.url);
           });
         }
       });
