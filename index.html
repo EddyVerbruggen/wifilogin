@@ -28,40 +28,50 @@
       }
     }
 
-    function onLoadstart(event) {
+    function openChildBrowser(pleaseTakeMeHere) {
+      window.plugins.childBrowser.showWebPage(pleaseTakeMeHere, {showAddressBar: false, showLocationBar: false, showNavigationBar: false});
     }
 
     function redirectAndAuthenticate(pleaseTakeMeHere) {
-      window.plugins.childBrowser.showWebPage(pleaseTakeMeHere, {showLocationBar: true});
+      openChildBrowser(pleaseTakeMeHere);
 
       // Capture loadstart event
       window.plugins.childBrowser.onLocationChange = function (url) {
-        // if anything else than 'x-services.nl' is loaded..
         debuglog("<br/>url: " + url);
-        // close the browser..
+        debuglog("<br/>closing browser in 3 sec");
 
-        debuglog("<br/>closing browser in 5 sec");
-        setTimeout(function() {
+//        setTimeout(function() {
+          // close the browser..
           window.plugins.childBrowser.close();
 
+        // if anything else than 'x-services.nl' is loaded..
           if (url.indexOf('x-services.nl') == -1) {
-            debuglog("closed by code, opening new one in 5 secs to " + url);
+            debuglog("closed by code, opening new one in 3 secs to " + url);
 
             setTimeout(function() {
 
               // .. and open a new (augmented) one
-              window.plugins.childBrowser.showWebPage(url + "&user=" + $('#username').val() + "&password=" + $('#password').val(), {showLocationBar: true});
+              openChildBrowser(url + "&user=" + $('#username').val() + "&password=" + $('#password').val());
+
+              window.plugins.childBrowser.onLocationChange = function (url) {
+                debuglog("<br/>url 2: " + url);
+                // close the browser..
+                window.plugins.childBrowser.close();
+                feedback("Je bent nu ingelogd.");
+              };
 
               // Capture loadstop event
 //              ref.addEventListener('loadstop', function() {
-//                debuglog("<br/>loading stopped, closing in 5 sec: " + event.url);
+//                debuglog("<br/>loading stopped, closing in 3 sec: " + event.url);
 //                setTimeout(function() {
 //                  ref.close();
 //                }, 5000);
 //              });
-            }, 5000);
+            }, 1000);
+          } else {
+            feedback("Je was nog ingelogd.");
           }
-        }, 5000);
+//        }, 3000);
       };
     }
 
@@ -105,6 +115,8 @@
   </form>
 
   <div id="footer">Zie je Google na klikken op Login?<br/>Dan ben je ingelogd en kun je de app sluiten.</div>
+
+  <div id="feedback"></div>
 
   <div id="debuglog"></div>
 
