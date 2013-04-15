@@ -21,13 +21,13 @@
 
     function onDeviceReady() {
       initLoginPage();
-      checkWiFi();
+      checkWiFiAndLogin();
     }
 
-    function checkWiFi() {
+    function checkWiFiAndLogin() {
       if (isWiFiConnection()) {
         $("#noWiFiContainer").hide();
-        $("#loginButton").show();
+        $("#loginButton").show().click();
       } else {
         $("#noWiFiContainer").append(" .");
         setTimeout(function(){checkWiFi()}, 1000)
@@ -78,9 +78,11 @@
       $('#loginButton')
           .unbind('click')
           .bind('click', function() {
-            setLoginName($('#username').val());
-            setPassword($('#password').val());
-            redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html?ts=" + new Date().getTime());
+            if (storedLoginName != null && storedLoginName != "undefined" && storedPassword != null && storedPassword != "undefined") {
+              setLoginName($('#username').val());
+              setPassword($('#password').val());
+              redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html?ts=" + new Date().getTime());
+            }
           });
     }
 
