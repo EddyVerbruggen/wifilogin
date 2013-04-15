@@ -1,6 +1,6 @@
 "use strict";
 
-var childBrowserTimeout = 1500;
+var childBrowserTimeout = 1100;
 
 function openChildBrowser(pleaseTakeMeHere) {
   window.plugins.childBrowser.showWebPage(pleaseTakeMeHere, {showAddressBar: false, showLocationBar: false, showNavigationBar: false});
