@@ -78,7 +78,7 @@
       $('#loginButton')
           .unbind('click')
           .bind('click', function() {
-            if (storedLoginName != null && storedLoginName != "undefined" && storedPassword != null && storedPassword != "undefined") {
+            if ($('#username').val() != "" && $('#password').val() != "") {
               setLoginName($('#username').val());
               setPassword($('#password').val());
               redirectAndAuthenticate("http://www.x-services.nl/wifilogin-ok.html?ts=" + new Date().getTime());
