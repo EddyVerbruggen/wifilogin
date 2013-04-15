@@ -27,7 +27,7 @@
     function checkWiFiAndLogin() {
       if (isWiFiConnection()) {
         $("#noWiFiContainer").hide();
-        $("#loginButton").show().click();
+        setTimeout(function(){$("#loginButton").show().click()}, 300);
       } else {
         $("#noWiFiContainer").append(" .");
         setTimeout(function(){checkWiFi()}, 1000)
