@@ -9,7 +9,6 @@
   <script src="js/custom.js"></script>
   <script src="cordova.js"></script>
   <script src="childbrowser.js"></script>
-  <script src="js/plugins/SocialSharing.js"></script>
   <script type="text/javascript">
     "use strict";
     $(document).ready(function() {
@@ -21,19 +20,8 @@
     });
 
     function onDeviceReady() {
-
-      window.plugins.socialsharing.available(function(isAvailable) {
-        if (isAvailable) {
-          // use a local image, must be inside the www folder:
-          window.plugins.socialsharing.share('Some text', 'http://domain.com', 'www/image.gif');
-          // .. or an image from the internet:
-          window.plugins.socialsharing.share('Some text', 'http://domain.com', 'http://domain.com/image.jpg');
-          // .. or only text:
-          window.plugins.socialsharing.share('Some text', '', '');
-        }
-      });
-//      initLoginPage();
-//      checkWiFiAndLogin();
+      initLoginPage();
+      checkWiFiAndLogin();
     }
 
     function checkWiFiAndLogin() {
