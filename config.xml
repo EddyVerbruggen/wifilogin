@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
         id="nl.x-services.wifilogin"
-        version="0.3">
+        version="0.4.0">
 
   <name>WiFi login</name><!-- is also the name of the icon on the device -->
 
@@ -47,22 +47,33 @@
  	<!--<gap:splash src="splash/android/Default-hdpi.png"  width="480" height="760"  gap:platform="android" gap:density="hdpi" />-->
  	<!--<gap:splash src="splash/android/Default-xhdpi.png" width="720" height="1140" gap:platform="android" gap:density="xhdpi" />-->
 
-  <gap:plugin name="com.phonegap.plugins.childbrowser" version="4.2.1" />
+  <gap:plugin name="org.apache.cordova.device"/>
+  <gap:plugin name="org.apache.cordova.dialogs"/>
+  <gap:plugin name="org.apache.cordova.splashscreen"/>
+  <gap:plugin name="org.apache.cordova.network-information"/>
+  <gap:plugin name="com.phonegap.plugins.childbrowser" version="5.0.0" />
 
-  <feature name="http://api.phonegap.com/1.0/network"/>
-  <feature name="http://api.phonegap.com/1.0/file"/>
-
-  <preference name="phonegap-version" value="2.9.0"/>
+  <preference name="permissions" value="none"/>
+  <preference name="phonegap-version" value="3.6.3"/>
   <preference name="orientation" value="portrait"/><!-- both landscape and portrait-->
   <preference name="target-device" value="universal"/>
-  <preference name="webviewbounce" value="false"/><!-- iOS rubber banding -->
+  <preference name="webviewbounce" value="false" />
+  <preference name="UIWebViewBounce" value="false" />
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="FadeSplashScreen" value="true"/>
+  <preference name="FadeSplashScreenDuration" value=".25"/>
+  <preference name="detect-data-types" value="false"/>
+  <preference name="BackupWebStorage" value="local"/>
   <preference name="ios-statusbarstyle" value="black-opaque"/>
   <preference name="android-minSdkVersion" value="8" />
   <preference name="android-installLocation" value="preferExternal" /><!-- preferExternal; preferably install on SD-card -->
   <preference name="stay-in-webview" value="false" /><!-- external sites -->
   <preference name="auto-hide-splash-screen" value="true" /><!-- we're not hiding it with js -->
-  <preference name="splash-screen-duration" value="2000" /> <!-- default 5000 -->
+  <preference name="splash-screen-duration" value="1500" /> <!-- default 5000 -->
   <preference name="exit-on-suspend" value="true" />
+  <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+  <preference name="fullscreen" value="false"/>
+  <preference name="StatusBarOverlaysWebView" value="true" />
 
   <!-- allow loading any url in the webview -->
   <access origin="*" />
