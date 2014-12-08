@@ -1,22 +1,22 @@
 html, body {
-  font: 11px Verdana, Arial;
+  font: 12px Verdana, Arial;
   color: #006400;
-  margin: 10px;
+  margin: 16px;
 }
 input {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 #header {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 #feedback {
   margin-left: 2px;
   margin-top: 24px;
-  padding: 6px;
+  padding: 8px;
   background-color: #006400;
   color: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
   display: none;
 }

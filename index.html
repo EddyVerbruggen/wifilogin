@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<!doctype html>
+<html lang="nl">
 <head>
   <meta charset="utf-8">
-  <!--<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0"/>-->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" data-no-adjust="true">
+  <meta name="format-detection" content="telephone=no">
   <title>WiFi login</title>
   <link rel="stylesheet" href="css/custom.css" type="text/css"/>
   <script src="js/lib/jquery-1.9.1.min.js"></script>
@@ -37,21 +38,21 @@
       openChildBrowser(pleaseTakeMeHere);
 
       // Capture loadstart event
-      window.plugins.childBrowser.onLocationChange = function (url) {
+      window.plugins.ChildBrowser.onLocationChange = function (url) {
         setTimeout(function() {
           // close the browser..
-          window.plugins.childBrowser.close();
+          window.plugins.ChildBrowser.close();
 
           // if anything else than 'x-services.nl' was loaded..
           if (url.indexOf('x-services.nl') == -1) {
             setTimeout(function() {
               // .. open a new one with added credentials
               openChildBrowser(url + "&user=" + $('#username').val() + "&password=" + $('#password').val());
-              window.plugins.childBrowser.onLocationChange = function (url) {
+              window.plugins.ChildBrowser.onLocationChange = function (url) {
                 setTimeout(function() {
                   // ..a and close the browser
                   feedback("&check; Je bent nu ingelogd.");
-                  window.plugins.childBrowser.close();
+                  window.plugins.ChildBrowser.close();
                 }, childBrowserTimeout);
               };
 

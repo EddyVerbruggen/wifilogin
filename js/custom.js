@@ -3,7 +3,7 @@
 var childBrowserTimeout = 1100;
 
 function openChildBrowser(pleaseTakeMeHere) {
-  window.plugins.childBrowser.showWebPage(pleaseTakeMeHere, {showAddressBar: false, showLocationBar: false, showNavigationBar: false});
+  window.plugins.ChildBrowser.showWebPage(pleaseTakeMeHere, {showAddressBar: false, showLocationBar: false, showNavigationBar: false});
 }
 
 // generic catch for errors
