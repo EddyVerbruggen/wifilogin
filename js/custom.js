@@ -49,7 +49,8 @@ function showAlert(txt) {
 }
 
 function isWiFiConnection() {
+  alert('xx');
   var cnxType = navigator.connection.type;
-  showAlert('cnx: ' + cnxType);
+  alert('cnx: ' + cnxType);
   return cnxType === undefined || Connection.WIFI == cnxType;
 }
