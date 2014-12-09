@@ -49,7 +49,7 @@ function showAlert(txt) {
 }
 
 function isWiFiConnection() {
+  showAlert('x');
   var cnxType = navigator.connection.type;
-  alert('cnx: ' + Connection.WIFI);
   return cnxType === undefined || Connection.WIFI == cnxType;
 }
