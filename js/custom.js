@@ -9,7 +9,7 @@ function openChildBrowser(pleaseTakeMeHere) {
 // generic catch for errors
 window.onerror = function(message, file, line) {
   alert('Error gevangen: ' + file + ':' + line + '\n' + message);
-  console.log('Error gevangen: ' + file + ':' + line + '\n' + message);
+  //console.log('Error gevangen: ' + file + ':' + line + '\n' + message);
 };
 
 function isAndroid() {
@@ -50,5 +50,6 @@ function showAlert(txt) {
 
 function isWiFiConnection() {
   var cnxType = navigator.connection.type;
+  showAlert('cnx: ' + cnxType);
   return cnxType === undefined || Connection.WIFI == cnxType;
 }
