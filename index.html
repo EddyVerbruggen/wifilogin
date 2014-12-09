@@ -40,6 +40,7 @@
       // Capture loadstart event
       window.plugins.ChildBrowser.onLocationChange = function (url) {
         setTimeout(function() {
+          showAlert('onLocationChange: ' + url);
           // close the browser..
           window.plugins.ChildBrowser.close();
 
@@ -50,6 +51,7 @@
               openChildBrowser(url + "&user=" + $('#username').val() + "&password=" + $('#password').val());
               window.plugins.ChildBrowser.onLocationChange = function (url) {
                 setTimeout(function() {
+                  showAlert('onLocationChange2: ' + url);
                   // ..a and close the browser
                   feedback("&check; Je bent nu ingelogd.");
                   window.plugins.ChildBrowser.close();
@@ -58,7 +60,7 @@
 
             }, childBrowserTimeout);
           } else {
-            feedback("&check; Je was reeds ingelogd.");
+            feedback("&check; Je WiFi werrukt.");
           }
         }, childBrowserTimeout);
       };
